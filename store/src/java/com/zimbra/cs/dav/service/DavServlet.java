@@ -820,7 +820,8 @@ public class DavServlet extends ZimbraServlet {
                             String v = href.getText();
                             v = URLDecoder.decode(v);
                             // Bug:106438, because v contains URL encoded value(%40) for '@' the comparison fails
-                            if (v.startsWith(newPrefix)) {
+                            // Bug:109237, because newPrefix contains URL encoded special chars (e.g. ' ' space), comparison fails
+                            if (v.startsWith(URLDecoder.decode(newPrefix))) {
                                 href.setText(prefix + v.substring(newPrefix.length()+1));
                             }
                         }
